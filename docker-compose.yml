@@ -1,0 +1,34 @@
+version: "3.7"
+
+services:
+  grafana:
+    image: grafana/grafana:7.1.5
+    restart: always
+    volumes:
+      - "grafana-storage:/var/lib/grafana"
+
+    networks:
+      - speedtest
+    ports:
+      - "3000:3000"
+    
+  influxdb:
+    image: influxdb:1.8.2
+    restart: always
+    volumes:
+      - "influxdb-data:/var/lib/influxdb"
+    
+    networks:
+      - speedtest
+    
+    expose:
+      - "8086"
+
+networks:
+  speedtest:
+    name: speedtest
+    driver: bridge
+
+volumes:
+  grafana-storage:
+  influxdb-data:
